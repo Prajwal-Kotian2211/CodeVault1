@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Go to CodeVault</title>
   <style>
     body {
@@ -12,26 +13,32 @@
       background: #f4f4f4;
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
     }
 
     .container {
       text-align: center;
+      padding: 1rem;
+      max-width: 90%;
     }
 
     h1 {
-      margin-bottom: 20px;
+      margin-bottom: 1.2rem;
       color: #007bff;
+      font-size: clamp(1.5rem, 5vw, 2.5rem); /* scales with screen */
     }
 
     button {
-      padding: 12px 25px;
-      font-size: 18px;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
       background-color: #007bff;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
       transition: background 0.3s;
+      width: 100%;
+      max-width: 250px; /* prevents button from being too wide on desktop */
     }
 
     button:hover {
