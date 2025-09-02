@@ -27,7 +27,7 @@
   h1 {
     color: #007bff;
     margin-bottom: 20px;
-    font-size: clamp(1.5rem, 5vw, 2.5rem); /* Responsive font size */
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
   }
 
   button {
@@ -39,7 +39,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s;
-    width: min(80%, 250px); /* Scales nicely on small devices */
+    width: min(80%, 250px);
   }
 
   button:hover {
@@ -65,7 +65,6 @@
     box-sizing: border-box;
   }
 
-  /* Small pulsing dots loader */
   .loader {
     display: flex;
     justify-content: center;
@@ -94,20 +93,10 @@
     100% { transform: translateY(-15px);}
   }
 
-  /* Additional responsiveness for very small screens */
   @media (max-width: 400px) {
-    h1 {
-      font-size: 1.5rem;
-    }
-    button {
-      padding: 0.6rem 1.5rem;
-      font-size: 1rem;
-    }
-    .loader div {
-      width: 10px;
-      height: 10px;
-      margin: 0 3px;
-    }
+    h1 { font-size: 1.5rem; }
+    button { padding: 0.6rem 1.5rem; font-size: 1rem; }
+    .loader div { width: 10px; height: 10px; margin: 0 3px; }
   }
 </style>
 </head>
@@ -128,12 +117,27 @@
 
 <script>
 function startRedirect() {
-  document.getElementById("buttonContainer").style.display = "none";
-  document.getElementById("animationContainer").style.display = "flex";
+  const buttonContainer = document.getElementById("buttonContainer");
+  const animationContainer = document.getElementById("animationContainer");
 
-  setTimeout(() => {
-    window.location.href = "https://snippetblock.onrender.com/";
-  }, 12000); // 12 seconds before redirect
+  buttonContainer.style.display = "none";
+  animationContainer.style.display = "flex";
+
+  const redirectUrl = "https://snippetblock.onrender.com/";
+  const minimumDelay = 12000; // 12 seconds minimum for loader
+  const startTime = Date.now();
+
+  // Ping the backend silently to wake server
+  fetch(redirectUrl, { method: "HEAD", mode: "no-cors" })
+    .catch(() => {}) // ignore errors
+    .finally(() => {
+      const elapsed = Date.now() - startTime;
+      const remaining = Math.max(minimumDelay - elapsed, 0);
+
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, remaining);
+    });
 }
 </script>
 </body>
