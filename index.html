@@ -120,22 +120,18 @@ function startRedirect() {
   const buttonContainer = document.getElementById("buttonContainer");
   const animationContainer = document.getElementById("animationContainer");
 
-  // Show animation
   buttonContainer.style.display = "none";
   animationContainer.style.display = "flex";
 
   const redirectUrl = "https://snippetblock.onrender.com/";
   const minimumDelay = 12000; // 12 seconds
 
-  // Preload page in background using hidden iframe
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.src = redirectUrl;
-  document.body.appendChild(iframe);
+  // Open the target page immediately in a new tab
+  const newTab = window.open(redirectUrl, "_blank");
 
-  // Redirect after minimumDelay
+  // After 12 seconds, close the loader page
   setTimeout(() => {
-    window.location.href = redirectUrl;
+    window.close(); // closes this loader tab
   }, minimumDelay);
 }
 </script>
