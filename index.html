@@ -113,13 +113,31 @@
 </div>
 
 <script>
-function startRedirect() {
+async function waitForBackend() {
+  const backendUrl = "https://snippetblock.onrender.com/health";
+
+  while (true) {
+    try {
+      const res = await fetch(backendUrl, { method: "GET" });
+      if (res.ok) {
+        return true; // Backend is ready
+      }
+    } catch (err) {
+      // Ignore errors and retry
+    }
+    await new Promise(resolve => setTimeout(resolve, 2000)); // Retry every 2s
+  }
+}
+
+async function startRedirect() {
   document.getElementById("buttonContainer").style.display = "none";
   document.getElementById("animationContainer").style.display = "flex";
 
-  setTimeout(() => {
-    window.location.href = "https://snippetblock.onrender.com/";
-  }, 12000); // 12 seconds before redirect
+  // Keep checking backend until it's ready
+  await waitForBackend();
+
+  // Redirect once backend is alive
+  window.location.href = "https://snippetblock.onrender.com/";
 }
 </script>
 </body>
