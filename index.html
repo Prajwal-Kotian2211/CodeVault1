@@ -114,7 +114,7 @@
 
 <script>
 async function waitForBackend() {
-  const backendUrl = "https://snippetblock.onrender.com/health";
+  const backendUrl = "/api/health";  // ✅ Goes through Netlify proxy
 
   while (true) {
     try {
@@ -123,7 +123,7 @@ async function waitForBackend() {
         return true; // Backend is ready
       }
     } catch (err) {
-      // Ignore errors and retry
+      // Ignore errors, retry
     }
     await new Promise(resolve => setTimeout(resolve, 2000)); // Retry every 2s
   }
@@ -133,12 +133,14 @@ async function startRedirect() {
   document.getElementById("buttonContainer").style.display = "none";
   document.getElementById("animationContainer").style.display = "flex";
 
-  // Keep checking backend until it's ready
+  // Wait until backend responds
   await waitForBackend();
 
-  // Redirect once backend is alive
+  // Redirect user to backend app
   window.location.href = "https://snippetblock.onrender.com/";
 }
 </script>
+
 </body>
 </html>
+
