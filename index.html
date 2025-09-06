@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+frontnd page is <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -113,34 +113,14 @@
 </div>
 
 <script>
-async function waitForBackend() {
-  const backendUrl = "/api/health";  // ✅ Goes through Netlify proxy
-
-  while (true) {
-    try {
-      const res = await fetch(backendUrl, { method: "GET" });
-      if (res.ok) {
-        return true; // Backend is ready
-      }
-    } catch (err) {
-      // Ignore errors, retry
-    }
-    await new Promise(resolve => setTimeout(resolve, 2000)); // Retry every 2s
-  }
-}
-
-async function startRedirect() {
+function startRedirect() {
   document.getElementById("buttonContainer").style.display = "none";
   document.getElementById("animationContainer").style.display = "flex";
 
-  // Wait until backend responds
-  await waitForBackend();
-
-  // Redirect user to backend app
-  window.location.href = "https://snippetblock.onrender.com/";
+  setTimeout(() => {
+    window.location.href = "https://snippetblock.onrender.com/";
+  }, 12000); // 12 seconds before redirect
 }
 </script>
-
 </body>
 </html>
-
